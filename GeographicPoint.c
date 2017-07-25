@@ -11,11 +11,10 @@ int main(void)
 	int i;
 	char filename[100]="map_data.txt";
 	in = fopen(filename, "r");
-	int m[filas*cols];
+	int *matriz = malloc(filas*cols*sizeof(int));
 	for(i=0;i<filas*cols;i++)
 	{
-		fscanf(in, "%d\n", m);
+		fscanf(in, "%d\n", &matriz[i]);
 	}
-	printf("%d\n", m[371999]);
 	fclose(in);
 }
