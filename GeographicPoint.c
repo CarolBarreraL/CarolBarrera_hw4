@@ -15,8 +15,6 @@ int main(void)
 {
 	FILE *in;
 	int i;
-	int oceano = 0;
-	int tierra = 1;
 	char filename[100]="map_data.txt";
 	in = fopen(filename, "r");
 	int *matriz = malloc(filas*cols*sizeof(int));
@@ -26,29 +24,50 @@ int main(void)
 	}
 	fclose(in);
 	
+	
 }
 
-/*double radio(int puntoAl, int i, int j)
+double radio(int iPunto, int jPunto)
 {
-	
-}*/
+	double r;
+	int rint;
+	int iNuevo;
+	int jNuevo;
+	for(rint=1;rint<filas/2;rint++)
+	{	
+		for(iNuevo=iPunto+1; iNuevo<rint; iNuevo++)
+		{
+		for(jNuevo=jPunto+1; jNuevo<rint; jNuevo++)
+		{
+			if(matriz[indice(iNuevo,jNuevo)]==0||)		
+			r = pow(iPunto-iNuevo,2.0)+pow(jPunto - jNuevo,2.0);
+		
+		}
+		}
+	}
+	return r;
+}
 
 
 int Aleai(void)
 {
-	int num = rand()%(filas + 1);
+	int num = rand()%(filas/2 + 1)-filas/4;
 	return num;
 }
 
 int Aleaj(void)
 {
-	int num = rand()%(cols + 1);
+	int num = rand()%(cols/2 + 1)-cols/4;
 	return num;
 }
 
 int indice(int i, int j)
 {	
 	int num;
+	if(i<0){i = filas - i%filas;}
+	else if(i>filas){i = i%filas;}
+	if(j<0){j= cols - i%cols;}
+	else if(j>cols){j = j%cols;}
 	num = i*cols + j;	
 	return num;
 }
