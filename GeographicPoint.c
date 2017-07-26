@@ -9,7 +9,7 @@
 int indice(int i, int j);
 int Aleai(void);
 int Aleaj(void);
-double radio(int i, int j);
+double radio(int iPunto, int jPunto, int *matriz);
 
 int main(void)
 {
@@ -23,27 +23,46 @@ int main(void)
 		fscanf(in, "%d\n", &matriz[i]);
 	}
 	fclose(in);
+	double rInicial;
+	
+	
+	int Posx = Aleai();
+	int Posy = Aleaj();
+	if(matriz[indice(Posx,Posy)]==1)
+	{
+		Posx = Aleai();
+		Posy = Aleaj();
+	}
+	
+	rInicial = radio(Posx, Posy, matriz);
+	
 	
 	
 }
 
-double radio(int iPunto, int jPunto)
+double radio(int iPunto, int jPunto, int *matriz)
 {
 	double r;
-	int rint;
+	double rint;
 	int iNuevo;
 	int jNuevo;
+	double rMax =0.0;
 	for(rint=1;rint<filas/2;rint++)
 	{	
-		for(iNuevo=iPunto+1; iNuevo<rint; iNuevo++)
+		for(iNuevo=0; iNuevo<rint; iNuevo++)
 		{
-		for(jNuevo=jPunto+1; jNuevo<rint; jNuevo++)
-		{
-			if(matriz[indice(iNuevo,jNuevo)]==0||)		
-			r = pow(iPunto-iNuevo,2.0)+pow(jPunto - jNuevo,2.0);
-		
+			for(jNuevo=0; jNuevo<rint; jNuevo++)
+			{	
+				if(pow(iNuevo,2.0)+ pow(jNuevo,2.0)< pow(rint,2.0))		
+				{
+					if(matriz[indice(iPunto + iNuevo,jPunto + jNuevo)]== 0 && matriz[indice(iPunto - iNuevo,jPunto -jNuevo)]== 0 && matriz[indice(iPunto - iNuevo,jPunto+jNuevo)]== 0 && matriz[indice(iPunto + iNuevo,jPunto - jNuevo)]== 0){r = rint;}
+					else { r=rMax;}
+				}	
+			if(r == rMax){break;}	
+			}
+		if(r == rMax){break;}
 		}
-		}
+	if(r == rMax){break;}
 	}
 	return r;
 }
@@ -64,9 +83,9 @@ int Aleaj(void)
 int indice(int i, int j)
 {	
 	int num;
-	if(i<0){i = filas - i%filas;}
+	if(i<0){i = filas + i%filas;}
 	else if(i>filas){i = i%filas;}
-	if(j<0){j= cols - i%cols;}
+	if(j<0){j= cols + j%cols;}
 	else if(j>cols){j = j%cols;}
 	num = i*cols + j;	
 	return num;
