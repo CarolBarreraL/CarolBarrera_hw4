@@ -7,14 +7,16 @@
 #define cols 744
 
 int indice(int i, int j);
-void Alea(void);
+int Aleai(void);
+int Aleaj(void);
+double radio(int i, int j);
 
 int main(void)
 {
 	FILE *in;
 	int i;
-	int oceano = 1;
-	int tierra = 0;
+	int oceano = 0;
+	int tierra = 1;
 	char filename[100]="map_data.txt";
 	in = fopen(filename, "r");
 	int *matriz = malloc(filas*cols*sizeof(int));
@@ -26,15 +28,23 @@ int main(void)
 	
 }
 
-/*Youtube, programacion ATS(video 47), genera un numero aleatorio*/
-void Alea(void)
+/*double radio(int puntoAl, int i, int j)
 {
-	int num;
-	srand(time(NULL));
-	num = rand()%(filas*cols + 1);
-	printf("%d\n", num);
+	
+}*/
+
+
+int Aleai(void)
+{
+	int num = rand()%(filas + 1);
+	return num;
 }
 
+int Aleaj(void)
+{
+	int num = rand()%(cols + 1);
+	return num;
+}
 
 int indice(int i, int j)
 {	
