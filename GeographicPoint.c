@@ -34,8 +34,6 @@ int main(void)
 		
 	}
 	
-	int val = matriz[indice(Posx,Posy)];
-	printf("%e,%d,%d, %d\n", rInicial,Posx, Posy, val);
 	
 }
 
@@ -55,9 +53,7 @@ double radio(int iPunto, int jPunto, int *matriz)
 			{	
 				if(pow(iNuevo,2.0)+ pow(jNuevo,2.0)< pow(rint,2.0))		
 				{
-					//if(matriz[indice(iPunto + iNuevo,jPunto + jNuevo)]== 0 && matriz[indice(iPunto - iNuevo,jPunto -jNuevo)]== 0 && matriz[indice(iPunto - iNuevo,jPunto+jNuevo)]== 0 && matriz[indice(iPunto + iNuevo,jPunto - jNuevo)]== 0){r = rint;}
-					if(matriz[indice(iPunto,jPunto + jNuevo)]== 0 && matriz[indice(iPunto,jPunto -jNuevo)]== 0 && matriz[indice(iPunto - iNuevo,jPunto)]== 0 && matriz[indice(iPunto + iNuevo,jPunto)]== 0){r = rint;}
-					
+					if(matriz[indice(iPunto + iNuevo,jPunto + jNuevo)]== 0 && matriz[indice(iPunto - iNuevo,jPunto -jNuevo)]== 0 && matriz[indice(iPunto - iNuevo,jPunto+jNuevo)]== 0 && matriz[indice(iPunto + iNuevo,jPunto - jNuevo)]== 0  && matriz[indice(iPunto,jPunto + jNuevo)]== 0 && matriz[indice(iPunto,jPunto -jNuevo)]== 0 && matriz[indice(iPunto - iNuevo,jPunto)]== 0 && matriz[indice(iPunto + iNuevo,jPunto)]== 0){r = rint;}
 					else {pare = rMax; break;}
 				}
 			if(pare==rMax){break;}
