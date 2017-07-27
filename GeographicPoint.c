@@ -15,6 +15,7 @@ int main(void)
 {
 	FILE *in;
 	int i;
+	int pasos = 1000;
 	char filename[100]="map_data.txt";
 	in = fopen(filename, "r");
 	int *matriz = malloc(filas*cols*sizeof(int));
@@ -23,18 +24,57 @@ int main(void)
 		fscanf(in, "%d\n", &matriz[i]);
 	}
 	fclose(in);
-	double rInicial;
 	
+	//Posiciones Aleatorias
 	srand(time(NULL));
-	int Posx = rand()%(filas);
-	int Posy = rand()%(cols);
-	if(matriz[indice(Posx,Posy)]==0)
+	int Posx = rand()%(filas+1);
+	int Posy = rand()%(cols+1);
+
+	int nuevax, nuevay;
+	float alpha, rInicial, nuevoR;
+
+	rInicial = radio(Posx, Posy, matriz);
+	printf("%f\n", rInicial);
+	for(i=0; i<pasos; i++)
 	{
+		nuevax = Posx + Aleai();
+		if(nuevax<0){nuevax = filas + nuevax%filas;}
+		else if(nuevax>filas){nuevax = nuevax%filas;}
+		nuevay = Posy + Aleaj();
+		if(nuevay<0){nuevay= cols + nuevay%cols;}
+		else if(nuevay>cols){nuevay = nuevay%cols;}
+		
+	nuevoR = radio(nuevax, nuevay, matriz);
+	printf("%f\n", nuevoR);
+	alpha = nuevoR/rInicial;
+		if(alpha>1)
+		{
+			Posx = nuevax; 
+			Posy = nuevay; 
+			rInicial=nuevoR;
+		}
+		else if(alpha<1)
+		{
+			float beta = rand()/RAND_MAX;
+			if(beta<alpha)
+			{
+				Posx = nuevax; 
+				Posy = nuevay; 
+				rInicial=nuevoR;
+			}
+			else { Posx =  Posx; Posy = Posy; rInicial=rInicial;}
+		}
+	}
+	printf("%d,%d,%f\n", Posx, Posy, rInicial);
+
+	//Como asegurar que no es 1 el punto??????
+	/*if(matriz[indice(Posx,Posy)]==1)
+	{
+		Posx = rand()%(filas);
+		Posy = rand()%(cols);
 		rInicial = radio(Posx, Posy, matriz);
 		
-	}
-	
-	
+	}*/
 }
 
 double radio(int iPunto, int jPunto, int *matriz)
@@ -68,13 +108,15 @@ double radio(int iPunto, int jPunto, int *matriz)
 
 int Aleai(void)
 {
-	int num = rand()%(filas/2 + 1)-filas/4;
+	//int num = rand()%(filas/3 + 1)-filas/6;
+	int num = rand()%(filas/3);
 	return num;
 }
 
 int Aleaj(void)
 {
-	int num = rand()%(cols/2 + 1)-cols/4;
+	//int num = rand()%(cols/5 + 1)-cols/10;
+	int num = rand()%(cols/5);
 	return num;
 }
 
