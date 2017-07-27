@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 datos = np.genfromtxt('map_data.txt', delimiter=' ')
-Coord = np.genfromtxt('datos.csv', delimiter=',')
+Coord = np.genfromtxt('datos.csv', delimiter=' ')
 
 y = Coord[0]
 x = Coord[1]
