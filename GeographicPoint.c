@@ -27,42 +27,37 @@ int main(void)
 	
 	//Posiciones Aleatorias
 	srand(time(NULL));
-	int Posx = rand()%(filas+1);
-	int Posy = rand()%(cols+1);
+	int Posx = Aleai();
+	int Posy = Aleaj();
 
 	int nuevax, nuevay;
-	float alpha, rInicial, nuevoR;
-
+	float alpha, rInicial, nuevoR, beta;
 	rInicial = radio(Posx, Posy, matriz);
-	printf("%f\n", rInicial);
 	for(i=0; i<pasos; i++)
-	{
+	{		
 		nuevax = Posx + Aleai();
 		if(nuevax<0){nuevax = filas + nuevax%filas;}
 		else if(nuevax>filas){nuevax = nuevax%filas;}
 		nuevay = Posy + Aleaj();
 		if(nuevay<0){nuevay= cols + nuevay%cols;}
 		else if(nuevay>cols){nuevay = nuevay%cols;}
-		
 	nuevoR = radio(nuevax, nuevay, matriz);
-	printf("%f\n", nuevoR);
 	alpha = nuevoR/rInicial;
-		if(alpha>1)
+		if(alpha>1.0)
 		{
 			Posx = nuevax; 
 			Posy = nuevay; 
 			rInicial=nuevoR;
 		}
-		else if(alpha<1)
+		else if(alpha<1.0)
 		{
-			float beta = rand()/RAND_MAX;
+			beta = rand()/RAND_MAX;
 			if(beta<alpha)
 			{
 				Posx = nuevax; 
 				Posy = nuevay; 
 				rInicial=nuevoR;
 			}
-			else { Posx =  Posx; Posy = Posy; rInicial=rInicial;}
 		}
 	}
 	printf("%d,%d,%f\n", Posx, Posy, rInicial);
@@ -84,7 +79,6 @@ double radio(int iPunto, int jPunto, int *matriz)
 	int iNuevo;
 	int jNuevo;
 	double pare;
-	double rMax =0.0;
 	for(rint=1;rint<filas/2;rint++)
 	{	
 		for(iNuevo=0; iNuevo<rint; iNuevo++)
@@ -94,13 +88,13 @@ double radio(int iPunto, int jPunto, int *matriz)
 				if(pow(iNuevo,2.0)+ pow(jNuevo,2.0)< pow(rint,2.0))		
 				{
 					if(matriz[indice(iPunto + iNuevo,jPunto + jNuevo)]== 0 && matriz[indice(iPunto - iNuevo,jPunto -jNuevo)]== 0 && matriz[indice(iPunto - iNuevo,jPunto+jNuevo)]== 0 && matriz[indice(iPunto + iNuevo,jPunto - jNuevo)]== 0  && matriz[indice(iPunto,jPunto + jNuevo)]== 0 && matriz[indice(iPunto,jPunto -jNuevo)]== 0 && matriz[indice(iPunto - iNuevo,jPunto)]== 0 && matriz[indice(iPunto + iNuevo,jPunto)]== 0){r = rint;}
-					else {pare = rMax; break;}
+					else {r = rint; pare = r; break;}
 				}
-			if(pare==rMax){break;}
+			if(pare==r){break;}
 			}
-		if(pare==rMax){break;}
+		if(pare==r){break;}
 		}
-	if(pare==rMax){break;}
+	if(pare==r){break;}
 	}
 	return r;
 }
@@ -108,15 +102,15 @@ double radio(int iPunto, int jPunto, int *matriz)
 
 int Aleai(void)
 {
-	//int num = rand()%(filas/3 + 1)-filas/6;
-	int num = rand()%(filas/3);
+	int num = rand()%(filas/2 + 1)-filas/4;
+	//int num = rand()%(filas+1);
 	return num;
 }
 
 int Aleaj(void)
 {
-	//int num = rand()%(cols/5 + 1)-cols/10;
-	int num = rand()%(cols/5);
+	int num = rand()%(cols/4 + 1)-cols/8;
+	//int num = rand()%(cols+1);
 	return num;
 }
 
