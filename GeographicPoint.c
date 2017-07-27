@@ -11,6 +11,8 @@ int indice(int i, int j);
 int Aleai(void);
 int Aleaj(void);
 double radio(int iPunto, int jPunto, int *matriz);
+double lat(int i);
+double longitud(int j);
 
 int main(void)
 {
@@ -92,7 +94,9 @@ int main(void)
 	fclose(dat);
 	
 	char mensaje[100] = "Las coordenadas del punto mas alejado son: ";
-	printf("%s %d, %d\n", mensaje, MaxX, MaxY);
+	double latitud = lat(MaxX);	
+	double lon = longitud(MaxY);
+	printf("%s longitud: %e, latitud:%e\n", mensaje, lon, latitud);
 
 
 	return 0;
@@ -155,11 +159,19 @@ int indice(int i, int j)
 double lat(int i)
 {
 	double lat;
-	if(i< filas/2){lat = -90 + i; }
+	if(i>filas/2){lat = (-1)*(90 - i*90/500); }
+	else {lat = 90 - i*90/250; }
+	return lat;
 }
 
 
-
+double longitud(int j)
+{
+	double lon;
+	if(j>cols/2){lon = 180 - j*180/372; }
+	else {lon = -(180 - j*180/372);}
+	return lon;
+}
 
 
 
