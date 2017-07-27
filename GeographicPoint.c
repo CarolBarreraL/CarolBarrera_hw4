@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -26,15 +27,21 @@ int main(void)
 	fclose(in);
 	
 	//Posiciones Aleatorias
-	srand(time(NULL));
+	srand(1);
 	int Posx = Aleai();
 	int Posy = Aleaj();
 
 	int nuevax, nuevay;
 	float alpha, rInicial, nuevoR, beta;
+	int MaxX, MaxY;
+	float MaxR;	
 	rInicial = radio(Posx, Posy, matriz);
+	MaxX = Posx;
+	MaxY = Posy;
+	MaxR = rInicial;
 	for(i=0; i<pasos; i++)
-	{		
+	{	
+			
 		nuevax = Posx + Aleai();
 		if(nuevax<0){nuevax = filas + nuevax%filas;}
 		else if(nuevax>filas){nuevax = nuevax%filas;}
@@ -42,34 +49,43 @@ int main(void)
 		if(nuevay<0){nuevay= cols + nuevay%cols;}
 		else if(nuevay>cols){nuevay = nuevay%cols;}
 	nuevoR = radio(nuevax, nuevay, matriz);
+
 	alpha = nuevoR/rInicial;
 		if(alpha>1.0)
 		{
 			Posx = nuevax; 
 			Posy = nuevay; 
-			rInicial=nuevoR;
+			rInicial=radio(Posx, Posy, matriz);
+			
 		}
-		else if(alpha<1.0)
+		else
 		{
-			beta = rand()/RAND_MAX;
+			beta = drand48();
 			if(beta<alpha)
 			{
 				Posx = nuevax; 
 				Posy = nuevay; 
-				rInicial=nuevoR;
+				rInicial=radio(Posx, Posy, matriz);
+			
+			}
+			else if(beta>alpha)
+			{
+				Posx = Posx; 
+				Posy = Posy; 
+				rInicial=radio(Posx, Posy, matriz);
+			
 			}
 		}
-	}
-	printf("%d,%d,%f\n", Posx, Posy, rInicial);
-
-	//Como asegurar que no es 1 el punto??????
-	/*if(matriz[indice(Posx,Posy)]==1)
-	{
-		Posx = rand()%(filas);
-		Posy = rand()%(cols);
-		rInicial = radio(Posx, Posy, matriz);
+	if(rInicial>MaxR)
+		{
+			MaxX = nuevax;
+			MaxY = nuevay;
+			MaxR = rInicial;
+		}
 		
-	}*/
+	}
+	printf("%d,%d,%f\n", MaxX, MaxY, MaxR);
+	return 0;
 }
 
 double radio(int iPunto, int jPunto, int *matriz)
@@ -87,7 +103,7 @@ double radio(int iPunto, int jPunto, int *matriz)
 			{	
 				if(pow(iNuevo,2.0)+ pow(jNuevo,2.0)< pow(rint,2.0))		
 				{
-					if(matriz[indice(iPunto + iNuevo,jPunto + jNuevo)]== 0 && matriz[indice(iPunto - iNuevo,jPunto -jNuevo)]== 0 && matriz[indice(iPunto - iNuevo,jPunto+jNuevo)]== 0 && matriz[indice(iPunto + iNuevo,jPunto - jNuevo)]== 0  && matriz[indice(iPunto,jPunto + jNuevo)]== 0 && matriz[indice(iPunto,jPunto -jNuevo)]== 0 && matriz[indice(iPunto - iNuevo,jPunto)]== 0 && matriz[indice(iPunto + iNuevo,jPunto)]== 0){r = rint;}
+					if(matriz[indice(iPunto + iNuevo,jPunto + jNuevo)]== 0 && matriz[indice(iPunto - iNuevo,jPunto -jNuevo)]== 0 && matriz[indice(iPunto - iNuevo,jPunto+jNuevo)]== 0 && matriz[indice(iPunto + iNuevo,jPunto - jNuevo)]== 0 && matriz[indice(iPunto,jPunto + jNuevo)]== 0 && matriz[indice(iPunto,jPunto -jNuevo)]== 0 && matriz[indice(iPunto - iNuevo,jPunto)]== 0 && matriz[indice(iPunto + iNuevo,jPunto)]== 0 ){r = rint;}
 					else {r = rint; pare = r; break;}
 				}
 			if(pare==r){break;}
