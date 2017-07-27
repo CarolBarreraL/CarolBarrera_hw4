@@ -84,7 +84,17 @@ int main(void)
 		}
 		
 	}
-	printf("%d,%d,%f\n", MaxX, MaxY, MaxR);
+
+	FILE *dat;
+	char data[100]="datos.csv";
+	dat = fopen(data, "w");
+	fprintf(dat, "%d %d %f\n", MaxX, MaxY, MaxR);
+	fclose(dat);
+	
+	char mensaje[100] = "Las coordenadas del punto mas alejado son: ";
+	printf("%s %d, %d\n", mensaje, MaxX, MaxY);
+
+
 	return 0;
 }
 
@@ -140,6 +150,12 @@ int indice(int i, int j)
 	else if(j>cols){j = j%cols;}
 	num = i*cols + j;	
 	return num;
+}
+
+double lat(int i)
+{
+	double lat;
+	if(i< filas/2){lat = -90 + i; }
 }
 
 
